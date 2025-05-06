@@ -21,6 +21,9 @@
 # • Thank you for using 𝗙𝘆𝗮𝗻𝗦𝗰𝗿𝗶𝗽𝘁𝘀! ❤️ ]]
 
 wait(0.8)
+while true do
+    setfpscap(90)
+end
 local showTime = 5
 local defaultImageID = "rbxassetid://89230521301946"
 
