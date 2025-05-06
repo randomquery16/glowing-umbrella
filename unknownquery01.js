@@ -23,6 +23,7 @@
 wait(0.8)
 while true do
     setfpscap(90)
+    task.wait()
 end
 local showTime = 5
 local defaultImageID = "rbxassetid://89230521301946"
