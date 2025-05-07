@@ -1,7 +1,9 @@
 wait(0.8)
-while true do
-	setfpscap(90)
-	task.wait()
+spawn(function()
+    while true do
+      setfpscap(90)
+      task.wait()
+   end
 end
 local ScreenGui_2 = Instance.new("ScreenGui")
 ScreenGui_2.Name = "SmartFloatIntro"
