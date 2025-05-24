@@ -1,4 +1,4 @@
---[ Revenant Library Suite
+--[[ Revenant Library Suite
    Special Thanks for
           Xymatekidd0 - UI Designer
           luauruler26 - Script designer
