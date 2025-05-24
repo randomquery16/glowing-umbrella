@@ -1,4 +1,10 @@
---https://v3rmillion.net/showthread.php?tid=1182163
+--[ Revenant Library Suite
+   Special Thanks for
+          Xymatekidd0 - UI Designer
+          luauruler26 - Script designer
+          someone007 - UI display controller
+]]
+
 local library = {}
 library.Flags = {}
 library.DefaultColor = Color3.fromRGB(56, 207, 154)
