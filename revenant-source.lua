@@ -133,7 +133,7 @@ local getcustomasset = getcustomasset or getsynasset
 if not isfolder("Revenant") then
     makefolder("Revenant")
     local ToggleOverlay = Request({
-	Url = "https://raw.githubusercontent.com/randomquery16/revenant-library/refs/heads/main/asset/RevenantToggleOverlay.png",
+	Url = "https://github.com/randomquery16/revenant-library/blob/main/asset/RevenantToggleOverlay.png?raw=true",
 	Method = "GET"
 	})
 	writefile("Revenant/ToggleOverlay.png", ToggleOverlay.Body)
