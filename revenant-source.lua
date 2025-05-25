@@ -1,13 +1,6 @@
---[[ Revenant Library Suite
-   Special Thanks for
-          Xymatekidd0 - UI Designer
-          luauruler26 - Script designer
-          someone007 - UI display controller
-]]
-
-local library = {}
-library.Flags = {}
-library.DefaultColor = Color3.fromRGB(56, 207, 154)
+local revenantc = {}
+revenantc.Flags = {}
+revenantc.DefaultColor = Color3.fromRGB(255, 255, 255)
 
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
@@ -25,13 +18,13 @@ for _,v in pairs(game:GetService("CoreGui"):GetChildren()) do
     end
 end
 
-function library:GetXY(GuiObject)
+function revenantc:GetXY(GuiObject)
 	local Max, May = GuiObject.AbsoluteSize.X, GuiObject.AbsoluteSize.Y
 	local Px, Py = math.clamp(Mouse.X - GuiObject.AbsolutePosition.X, 0, Max), math.clamp(Mouse.Y - GuiObject.AbsolutePosition.Y, 0, May)
 	return Px/Max, Py/May
 end
 
-function library:Toggle()
+function revenantc:Toggle()
     for _,v in pairs(game:GetService("CoreGui"):GetChildren()) do
         if v.Name == "Revenant" then
             v.Enabled = not v.Enabled
@@ -42,7 +35,8 @@ end
 if not game:GetService("CoreGui"):FindFirstChild("NotificationLibrary") then
 local notificationLibrary = Instance.new("ScreenGui")
 notificationLibrary.Name = "NotificationLibrary"
-notificationLibrary.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+notificationLibrary.ZIndexBehavior = Enum.ZIndexBehavior.Global
+notificationLibrary.DisplayOrder = 999999999999999999999
 notificationLibrary.Parent = game:GetService("CoreGui")
 
 local notificationHolder = Instance.new("Frame")
@@ -72,10 +66,10 @@ end
 local NotificationLib = game:GetService("CoreGui"):FindFirstChild("NotificationLibrary")
 local Holder = NotificationLib:FindFirstChild("NotificationHolder")
 
-function library:Notification(NotificationInfo)
+function revenantc:Notification(NotificationInfo)
 NotificationInfo.Text = NotificationInfo.Text or "This is a notification."
 NotificationInfo.Duration = NotificationInfo.Duration or 5
-NotificationInfo.Color = NotificationInfo.Color or library.DefaultColor
+NotificationInfo.Color = NotificationInfo.Color or revenantc.DefaultColor
 
 local notificationText = Instance.new("TextLabel")
 notificationText.Name = "NotificationText"
@@ -138,18 +132,18 @@ local getcustomasset = getcustomasset or getsynasset
 
 if not isfolder("Revenant") then
     makefolder("Revenant")
-    local Circle = Request({
-	Url = "https://github.com/Rain-Design/Libraries/blob/main/Icon/Circle.png?raw=true",
+    local ToggleOverlay = Request({
+	Url = "https://raw.githubusercontent.com/randomquery16/revenant-library/refs/heads/main/asset/RevenantToggleOverlay.png",
 	Method = "GET"
 	})
-	writefile("Revenant/Circle.png", Circle.Body)
-	library:Notification({
-        Text = "Downloaded Toggle Asset.",
+	writefile("Revenant/ToggleOverlay.png", ToggleOverlay.Body)
+	revenantc:Notification({
+        Text = "Asset Downloaded.",
         Duration = 3
     })
 end
 
-function library:Window(Info)
+function revenantc:Window(Info)
 Info.Text = Info.Text or "Revenant"
 
 local Pos = 0.05
@@ -164,6 +158,8 @@ local insidewindow = {}
 
 local revenant = Instance.new("ScreenGui")
 revenant.Name = "Revenant"
+revenant.DisplayOrder = 999999999999999999
+revenant.ZIndexBehavior = Enum.ZIndexBehavior.Global
 revenant.Parent = game:GetService("CoreGui")
 
 local WindowOpened = Instance.new("BoolValue", revenant)
@@ -485,7 +481,7 @@ Info.Callback = Info.Callback or function() end
 
 local insidetoggle = {}
 
-library.Flags[Info.Flag] = Info.Default
+revenantc.Flags[Info.Flag] = Info.Default
 
 local Toggled = false
     
@@ -549,7 +545,7 @@ uICorner1.Parent = outerFrame
 
 local innerFrame = Instance.new("ImageLabel")
 innerFrame.Name = "InnerFrame"
-innerFrame.Image = getcustomasset("Revenant/Circle.png")
+innerFrame.Image = getcustomasset("Revenant/ToggleOverlay.png")
 innerFrame.ResampleMode = "Pixelated"
 innerFrame.ImageColor3 = Color3.fromRGB(255, 255, 255)
 innerFrame.BackgroundTransparency = 1
@@ -559,7 +555,7 @@ innerFrame.Parent = outerFrame
 
 pcall(Info.Callback, Info.Default)
 innerFrame.Position = Info.Default and UDim2.new(0, 22,0, 2) or UDim2.new(0, 3,0, 2)
-outerFrame.BackgroundColor3 = Info.Default and library.DefaultColor or Color3.fromRGB(62, 62, 62)
+outerFrame.BackgroundColor3 = Info.Default and revenantc.DefaultColor or Color3.fromRGB(62, 62, 62)
 
 toggle.MouseEnter:Connect(function()
     fixLineToggle.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
@@ -574,19 +570,19 @@ end)
 function insidetoggle:Set(ToggleInfo)
 ToggleInfo.Bool = ToggleInfo.Bool or false
 Toggled = ToggleInfo.Bool
-library.Flags[Info.Flag] = ToggleInfo.Bool
+revenantc.Flags[Info.Flag] = ToggleInfo.Bool
 
 pcall(Info.Callback, ToggleInfo.Bool)
     TweenService:Create(innerFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut),{Position = ToggleInfo.Bool and UDim2.new(0, 22,0, 2) or UDim2.new(0, 3,0, 2)}):Play()
-    TweenService:Create(outerFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut),{BackgroundColor3 = ToggleInfo.Bool and library.DefaultColor or Color3.fromRGB(62, 62, 62)}):Play()
+    TweenService:Create(outerFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut),{BackgroundColor3 = ToggleInfo.Bool and revenantc.DefaultColor or Color3.fromRGB(62, 62, 62)}):Play()
 end
 
 toggleTextButton.MouseButton1Click:Connect(function()
     Toggled = not Toggled
-    library.Flags[Info.Flag] = Toggled
+    revenantc.Flags[Info.Flag] = Toggled
     pcall(Info.Callback, Toggled)
     TweenService:Create(innerFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut),{Position = Toggled and UDim2.new(0, 22,0, 2) or UDim2.new(0, 3,0, 2)}):Play()
-    TweenService:Create(outerFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut),{BackgroundColor3 = Toggled and library.DefaultColor or Color3.fromRGB(62, 62, 62)}):Play()
+    TweenService:Create(outerFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut),{BackgroundColor3 = Toggled and revenantc.DefaultColor or Color3.fromRGB(62, 62, 62)}):Play()
 end)
 
 return insidetoggle
@@ -1021,7 +1017,7 @@ outerSliderUICorner.Parent = outerSlider
 
 local innerSlider = Instance.new("Frame")
 innerSlider.Name = "InnerSlider"
-innerSlider.BackgroundColor3 = library.DefaultColor
+innerSlider.BackgroundColor3 = revenantc.DefaultColor
 innerSlider.BorderSizePixel = 0
 innerSlider.Position = UDim2.fromScale(-0.001, 0.458)
 innerSlider.Size = UDim2.new(DefaultScale, 0, 0, 4)
@@ -1091,7 +1087,7 @@ SizeFromScale = SizeFromScale - (SizeFromScale % 2)
 dragSliderButton.MouseButton1Down:Connect(function() -- Skidded from material ui hehe, sorry
 	local MouseMove, MouseKill
 	MouseMove = Mouse.Move:Connect(function()
-		local Px = library:GetXY(outerSlider)
+		local Px = revenantc:GetXY(outerSlider)
 		local SizeFromScale = (MinSize +  (MaxSize - MinSize)) * Px
 		local Value = math.floor(Info.Minimum + ((Info.Maximum - Info.Minimum) * Px))
 		SizeFromScale = SizeFromScale - (SizeFromScale % 2)
@@ -1151,4 +1147,4 @@ end)
 
 return insidewindow
 end
-return library
+return revenantc
